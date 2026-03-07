@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Recipe Book</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<header class="header">
+  <div class="header-inner">
+    <h1>Recipe <span>Book</span></h1>
+    <div class="search-row">
+      <input type="text" class="search-input" placeholder="Search recipes..." id="search">
+      <span class="result-count" id="count"></span>
+    </div>
+  </div>
+</header>
+
+<div class="filters" id="filters"></div>
+<div class="grid" id="grid"></div>
+
+<dialog id="modal">
+  <div class="modal-header">
+    <h2 id="modal-title"></h2>
+    <button class="modal-close" id="modal-close">&times;</button>
+  </div>
+  <div class="modal-tags" id="modal-tags"></div>
+  <div class="modal-body" id="modal-body"></div>
+</dialog>
+
+<script>
+let DATA = { recipes: [], filters: {} };
+let activeFilters = { protein: null, meal: null, method: null };
+let searchTerm = "";
+let debounceTimer;
+
+// --- Init ---
+fetch("recipes.json")
+  .then(r => r.json())
+  .then(data => {
+    DATA = data;
+    renderFilters();
+    renderGrid();
+  });
+
+// --- Filters ---
+function renderFilters() {
+  const el = document.getElementById("filters");
+  const groups = [
+    { key: "protein", label: "Protein" },
+    { key: "meal", label: "Meal Type" },
+    { key: "method", label: "Method" },
+  ];
+  el.innerHTML = groups.map(g => {
+    const chips = DATA.filters[g.key].map(v =>
+      `<span class="chip" data-group="${g.key}" data-value="${v}">${v}</span>`
+    ).join("");
+    return `<div class="filter-group">
+      <div class="filter-group-label">${g.label}</div>
+      <div class="filter-chips">${chips}</div>
+    </div>`;
+  }).join("");
+
+  el.addEventListener("click", e => {
+    const chip = e.target.closest(".chip");
+    if (!chip) return;
+    const group = chip.dataset.group;
+    const value = chip.dataset.value;
+    if (activeFilters[group] === value) {
+      activeFilters[group] = null;
+      chip.classList.remove("active");
+    } else {
+      el.querySelectorAll(`.chip[data-group="${group}"]`).forEach(c => c.classList.remove("active"));
+      activeFilters[group] = value;
+      chip.classList.add("active");
+    }
+    renderGrid();
+  });
+}
+
+// --- Search ---
+document.getElementById("search").addEventListener("input", e => {
+  clearTimeout(debounceTimer);
+  debounceTimer = setTimeout(() => {
+    searchTerm = e.target.value.trim().toLowerCase();
+    renderGrid();
+  }, 150);
+});
+
+// --- Grid ---
+function getFiltered() {
+  return DATA.recipes.filter(r => {
+    if (activeFilters.protein && r.protein !== activeFilters.protein) return false;
+    if (activeFilters.meal && r.meal !== activeFilters.meal) return false;
+    if (activeFilters.method && r.method !== activeFilters.method) return false;
+    if (searchTerm && !r.searchText.includes(searchTerm)) return false;
+    return true;
+  });
+}
+
+function getPreviewItems(recipe) {
+  const items = [];
+  for (const entry of recipe.ingredients) {
+    if (typeof entry === "string") {
+      items.push(entry);
+    } else if (entry.items) {
+      for (const it of entry.items) items.push(it);
+    }
+    if (items.length >= 4) break;
+  }
+  return items.slice(0, 4);
+}
+
+function renderGrid() {
+  const filtered = getFiltered();
+  document.getElementById("count").textContent = `${filtered.length} recipe${filtered.length !== 1 ? "s" : ""}`;
+
+  const grid = document.getElementById("grid");
+  if (filtered.length === 0) {
+    grid.innerHTML = `<div class="empty-state">No recipes found. Try adjusting your search or filters.</div>`;
+    return;
+  }
+
+  grid.innerHTML = filtered.map(r => {
+    const tags = [r.protein, r.meal, r.method].filter(Boolean);
+    const preview = getPreviewItems(r);
+    return `<div class="card" data-id="${r.id}">
+      <div class="card-title">${esc(r.title)}</div>
+      <div class="card-tags">${tags.map(t => `<span class="tag">${t}</span>`).join("")}</div>
+      <ul class="card-preview">${preview.map(i => `<li>${esc(shorten(i))}</li>`).join("")}</ul>
+    </div>`;
+  }).join("");
+}
+
+function shorten(s) {
+  return s.length > 50 ? s.slice(0, 47) + "..." : s;
+}
+
+function esc(s) {
+  const d = document.createElement("div");
+  d.textContent = s;
+  return d.innerHTML;
+}
+
+// --- Modal ---
+document.getElementById("grid").addEventListener("click", e => {
+  const card = e.target.closest(".card");
+  if (!card) return;
+  const recipe = DATA.recipes.find(r => r.id === card.dataset.id);
+  if (!recipe) return;
+  openModal(recipe);
+});
+
+function openModal(r) {
+  document.getElementById("modal-title").textContent = r.title;
+
+  const tags = [r.protein, r.meal, r.method].filter(Boolean);
+  document.getElementById("modal-tags").innerHTML = tags.map(t => `<span class="tag">${t}</span>`).join("");
+
+  let html = "<h3>Ingredients</h3>";
+  html += renderIngredients(r.ingredients);
+  html += "<h3>Instructions</h3>";
+  html += renderInstructions(r.instructions);
+
+  if (r.notes) {
+    html += `<div class="notes">${esc(r.notes)}</div>`;
+  }
+
+  if (r.sourceUrl) {
+    html += `<a class="source-link" href="${esc(r.sourceUrl)}" target="_blank" rel="noopener">Original Recipe &rarr;</a>`;
+  }
+
+  document.getElementById("modal-body").innerHTML = html;
+  document.getElementById("modal").showModal();
+}
+
+function renderIngredients(ingredients) {
+  let html = "";
+  for (const item of ingredients) {
+    if (typeof item === "string") {
+      html += `<ul><li>${esc(item)}</li></ul>`;
+    } else if (item.group) {
+      html += `<h4>${esc(item.group)}</h4><ul>${item.items.map(i => `<li>${esc(i)}</li>`).join("")}</ul>`;
+    }
+  }
+  // Merge adjacent <ul> tags for flat lists
+  html = html.replace(/<\/ul><ul>/g, "");
+  return html;
+}
+
+function renderInstructions(instructions) {
+  if (Array.isArray(instructions) && instructions.length > 0 && typeof instructions[0] === "string") {
+    return `<ol>${instructions.map(s => `<li>${esc(s)}</li>`).join("")}</ol>`;
+  }
+  let html = "";
+  for (const group of instructions) {
+    html += `<h4>${esc(group.group)}</h4><ol>${group.steps.map(s => `<li>${esc(s)}</li>`).join("")}</ol>`;
+  }
+  return html;
+}
+
+document.getElementById("modal-close").addEventListener("click", () => {
+  document.getElementById("modal").close();
+});
+
+document.getElementById("modal").addEventListener("click", e => {
+  if (e.target === e.currentTarget) e.currentTarget.close();
+});
+</script>
+
+</body>
+</html>
