@@ -13,7 +13,7 @@
     <div class="header-title-row">
       <h1>Recipe <span>Book</span></h1>
       <div class="header-actions">
-        <button class="icon-btn" id="save-pins-btn" title="Save pins to GitHub" style="display:none;">Save Pins</button>
+        <span class="pin-sync-status" id="pin-sync-status"></span>
         <button class="icon-btn icon-btn-subtle" id="settings-btn" title="Settings">&#9881;</button>
       </div>
     </div>
@@ -65,7 +65,7 @@ const PINNED_PATH = "pinned.json";
 
 let DATA = { recipes: [], filters: {} };
 let pinnedIds = [];
-let pinnedDirty = false;
+let pinSaveTimer = null;
 let activeFilters = { protein: null, meal: null, method: null };
 let searchTerm = "";
 let debounceTimer;
@@ -77,11 +77,6 @@ Promise.all([
 ]).then(([data, pinned]) => {
   DATA = data;
   pinnedIds = pinned;
-  // Merge with localStorage overrides
-  const local = localStorage.getItem("pinnedIds");
-  if (local) {
-    try { pinnedIds = JSON.parse(local); } catch(e) {}
-  }
   renderFilters();
   renderAll();
 });
@@ -95,10 +90,60 @@ function togglePin(id, e) {
   } else {
     pinnedIds.push(id);
   }
-  localStorage.setItem("pinnedIds", JSON.stringify(pinnedIds));
-  pinnedDirty = true;
-  document.getElementById("save-pins-btn").style.display = getToken() ? "" : "none";
   renderAll();
+  debounceSavePins();
+}
+
+// Auto-save pins to GitHub after a short debounce (batches rapid toggles)
+function debounceSavePins() {
+  clearTimeout(pinSaveTimer);
+  pinSaveTimer = setTimeout(() => savePinsToGitHub(), 1500);
+}
+
+async function savePinsToGitHub() {
+  const token = getToken();
+  const statusEl = document.getElementById("pin-sync-status");
+  if (!token) {
+    statusEl.textContent = "Set token in settings to sync pins";
+    statusEl.className = "pin-sync-status pin-sync-warn";
+    setTimeout(() => { statusEl.textContent = ""; statusEl.className = "pin-sync-status"; }, 3000);
+    return;
+  }
+  statusEl.textContent = "Syncing...";
+  statusEl.className = "pin-sync-status pin-sync-saving";
+  try {
+    const getResp = await fetch(`https://api.github.com/repos/${REPO_OWNER}/${REPO_NAME}/contents/${PINNED_PATH}`, {
+      headers: { "Authorization": `token ${token}` }
+    });
+    let sha = null;
+    if (getResp.ok) {
+      const file = await getResp.json();
+      sha = file.sha;
+    }
+    const body = {
+      message: "Update pinned recipes",
+      content: btoa(JSON.stringify(pinnedIds, null, 2) + "\n"),
+    };
+    if (sha) body.sha = sha;
+    const putResp = await fetch(`https://api.github.com/repos/${REPO_OWNER}/${REPO_NAME}/contents/${PINNED_PATH}`, {
+      method: "PUT",
+      headers: { "Authorization": `token ${token}`, "Content-Type": "application/json" },
+      body: JSON.stringify(body),
+    });
+    if (putResp.ok) {
+      statusEl.textContent = "Synced";
+      statusEl.className = "pin-sync-status pin-sync-ok";
+    } else {
+      statusEl.textContent = "Sync failed";
+      statusEl.className = "pin-sync-status pin-sync-err";
+      console.error("GitHub API error:", await putResp.json());
+    }
+  } catch (e) {
+    statusEl.textContent = "Sync failed";
+    statusEl.className = "pin-sync-status pin-sync-err";
+    console.error("Save failed:", e);
+  }
+  setTimeout(() => { statusEl.textContent = ""; statusEl.className = "pin-sync-status"; }, 2500);
 }
 
 // --- Filters ---
@@ -313,7 +358,6 @@ document.getElementById("pat-save").addEventListener("click", () => {
   if (val && !val.startsWith("*")) {
     localStorage.setItem("gh_pat", val);
     document.getElementById("pat-status").textContent = "Token saved.";
-    document.getElementById("save-pins-btn").style.display = pinnedDirty ? "" : "none";
   }
 });
 
@@ -321,73 +365,12 @@ document.getElementById("pat-clear").addEventListener("click", () => {
   localStorage.removeItem("gh_pat");
   document.getElementById("pat-input").value = "";
   document.getElementById("pat-status").textContent = "Token cleared.";
-  document.getElementById("save-pins-btn").style.display = "none";
 });
 
 function getToken() {
   return localStorage.getItem("gh_pat") || "";
 }
 
-// --- Save pins to GitHub ---
-document.getElementById("save-pins-btn").addEventListener("click", async () => {
-  const btn = document.getElementById("save-pins-btn");
-  const token = getToken();
-  if (!token) {
-    document.getElementById("settings-modal").showModal();
-    return;
-  }
-
-  btn.textContent = "Saving...";
-  btn.disabled = true;
-
-  try {
-    // Get current file SHA
-    const getResp = await fetch(`https://api.github.com/repos/${REPO_OWNER}/${REPO_NAME}/contents/${PINNED_PATH}`, {
-      headers: { "Authorization": `token ${token}` }
-    });
-    let sha = null;
-    if (getResp.ok) {
-      const file = await getResp.json();
-      sha = file.sha;
-    }
-
-    // Commit updated pinned.json
-    const body = {
-      message: "Update pinned recipes",
-      content: btoa(JSON.stringify(pinnedIds, null, 2) + "\n"),
-    };
-    if (sha) body.sha = sha;
-
-    const putResp = await fetch(`https://api.github.com/repos/${REPO_OWNER}/${REPO_NAME}/contents/${PINNED_PATH}`, {
-      method: "PUT",
-      headers: {
-        "Authorization": `token ${token}`,
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(body),
-    });
-
-    if (putResp.ok) {
-      pinnedDirty = false;
-      btn.textContent = "Saved!";
-      setTimeout(() => {
-        btn.textContent = "Save Pins";
-        btn.style.display = "none";
-      }, 2000);
-    } else {
-      const err = await putResp.json();
-      btn.textContent = "Error";
-      console.error("GitHub API error:", err);
-      setTimeout(() => { btn.textContent = "Save Pins"; }, 3000);
-    }
-  } catch (e) {
-    btn.textContent = "Error";
-    console.error("Save failed:", e);
-    setTimeout(() => { btn.textContent = "Save Pins"; }, 3000);
-  } finally {
-    btn.disabled = false;
-  }
-});
 </script>
 
 </body>

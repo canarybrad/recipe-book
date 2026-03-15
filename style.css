@@ -269,6 +269,16 @@ body {
   color: var(--accent);
 }
 
+.pin-sync-status {
+  font-size: 0.75rem;
+  color: var(--text-muted);
+  transition: opacity 0.2s;
+}
+.pin-sync-saving { color: var(--text-muted); }
+.pin-sync-ok { color: #2a7d2e; }
+.pin-sync-err { color: #c0392b; }
+.pin-sync-warn { color: var(--accent); }
+
 .card-title {
   font-size: 1.05rem;
   font-weight: 600;
