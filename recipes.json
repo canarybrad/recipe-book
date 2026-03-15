@@ -749,59 +749,6 @@
       "searchText": "cheesy zucchini crescent pie 2 tablespoons butter 4 cups thinly sliced zucchini 1 cup chopped onions 2 tablespoons dried parsley flakes 1/2 teaspoon salt 1/2 teaspoon pepper 1/4 teaspoon garlic powder 1/4 teaspoon dried basil leaves 1/4 teaspoon dried oregano leaves 2 eggs, well beaten 2 cups shredded muenster or mozzarella cheese (8 oz) 1 can (8 oz) refrigerated pillsbury crescent rolls (8 count) 2 teaspoons yellow mustard heat oven to 375 degrees f. in a 12-inch skillet, melt butter over medium-high heat. add zucchini and onions and cook 6 to 8 minutes, stirring occasionally, until tender. stir in parsley flakes, salt, pepper, garlic powder, basil, and oregano. in a large bowl, mix eggs and cheese. add cooked vegetable mixture and stir gently to combine. separate crescent dough into 8 triangles. place in an ungreased 10-inch glass pie plate, 12x8-inch (2-quart) glass baking dish, or 11-inch quiche pan. press over bottom and up sides to form a crust. firmly press perforations to seal. spread crust with mustard. pour egg mixture evenly into crust-lined pie plate. bake 18 to 22 minutes or until a knife inserted near center comes out clean. if necessary, cover edge of crust with strips of foil during last 10 minutes of baking to prevent excessive browning. let stand 10 minutes before serving."
     },
     {
-      "id": "chilled-ramen-noodle-salad-peanut-dressing",
-      "title": "Chilled Ramen Noodle Salad with Peanut Dressing",
-      "ingredients": [
-        {
-          "group": "Salad",
-          "items": [
-            "2 (3 oz) packages ramen noodles, seasoning packets discarded",
-            "1 cup shelled edamame",
-            "2 cups finely shredded purple cabbage",
-            "1 cup shredded carrots",
-            "1/2 cup slivered almonds",
-            "1/4 cup sliced scallions"
-          ]
-        },
-        {
-          "group": "Dressing",
-          "items": [
-            "1/3 cup creamy peanut butter",
-            "1/4 cup low-sodium soy sauce",
-            "2 tablespoons fresh lime juice",
-            "1 tablespoon sesame oil",
-            "1/4 cup honey",
-            "1 tablespoon minced garlic",
-            "1/4 teaspoon crushed red pepper flakes (optional)",
-            "2 teaspoons sesame seeds, for garnishing"
-          ]
-        }
-      ],
-      "instructions": [
-        {
-          "group": "Make the salad",
-          "steps": [
-            "Bring a large pot of water to a boil. Add the ramen noodles and cook according to package directions. Reserve 1/4 cup of the boiling water and set it aside, then drain the noodles and add them to a large bowl.",
-            "Add the edamame, cabbage, carrots, almonds and scallions to the bowl and toss to combine."
-          ]
-        },
-        {
-          "group": "Make the dressing",
-          "steps": [
-            "In a medium bowl, whisk together the peanut butter, soy sauce, lime juice, sesame oil, honey, garlic, crushed red pepper flakes (optional) and hot water until smooth.",
-            "Add the dressing to the bowl with the noodles and veggies and toss to combine.",
-            "Garnish with sesame seeds and serve or let cool completely before covering with plastic wrap and storing in the fridge."
-          ]
-        }
-      ],
-      "notes": "",
-      "protein": null,
-      "meal": "side",
-      "method": "stovetop",
-      "sourceUrl": "https://www.justataste.com/chilled-ramen-noodle-salad-peanut-dressing-recipe/",
-      "searchText": "chilled ramen noodle salad with peanut dressing 2 (3 oz) packages ramen noodles, seasoning packets discarded 1 cup shelled edamame 2 cups finely shredded purple cabbage 1 cup shredded carrots 1/2 cup slivered almonds 1/4 cup sliced scallions 1/3 cup creamy peanut butter 1/4 cup low-sodium soy sauce 2 tablespoons fresh lime juice 1 tablespoon sesame oil 1/4 cup honey 1 tablespoon minced garlic 1/4 teaspoon crushed red pepper flakes 2 teaspoons sesame seeds bring a large pot of water to a boil. add the ramen noodles and cook according to package directions. reserve 1/4 cup of the boiling water and set it aside, then drain the noodles and add them to a large bowl. add the edamame, cabbage, carrots, almonds and scallions to the bowl and toss to combine. in a medium bowl, whisk together the peanut butter, soy sauce, lime juice, sesame oil, honey, garlic, crushed red pepper flakes and hot water until smooth. add the dressing to the bowl with the noodles and veggies and toss to combine. garnish with sesame seeds and serve or let cool completely before covering with plastic wrap and storing in the fridge."
-    },
-    {
       "id": "chicken-and-dumplings",
       "title": "Chicken and Dumplings",
       "ingredients": [
@@ -942,6 +889,59 @@
       "method": "oven",
       "sourceUrl": "",
       "searchText": "high protein chicken zucchini bake 2 large zucchini, thinly sliced 2 chicken breasts, diced 1 cup cherry tomatoes, halved 1 cup shredded cheese (mozzarella or cheddar) 2 cloves garlic, minced 2 tablespoons olive oil 1 teaspoon italian seasoning salt and pepper to taste fresh basil for garnish (optional) preheat your oven to 375°f (190°c). in a large bowl, combine the diced chicken, sliced zucchini, halved cherry tomatoes, and minced garlic. drizzle olive oil over the mixture and sprinkle the italian seasoning, salt, and pepper. toss until everything is evenly coated. transfer the mixture into a greased baking dish. spread the shredded cheese evenly on top of the chicken and vegetable mixture. cover the baking dish with aluminum foil and bake for 25 minutes. remove the foil and continue baking for an additional 15 minutes or until the chicken is fully cooked and the cheese is melted and golden brown. let it cool for a few minutes and garnish with fresh basil if desired."
+    },
+    {
+      "id": "chilled-ramen-noodle-salad-peanut-dressing",
+      "title": "Chilled Ramen Noodle Salad with Peanut Dressing",
+      "ingredients": [
+        {
+          "group": "Salad",
+          "items": [
+            "2 (3 oz) packages ramen noodles, seasoning packets discarded",
+            "1 cup shelled edamame",
+            "2 cups finely shredded purple cabbage",
+            "1 cup shredded carrots",
+            "1/2 cup slivered almonds",
+            "1/4 cup sliced scallions"
+          ]
+        },
+        {
+          "group": "Dressing",
+          "items": [
+            "1/3 cup creamy peanut butter",
+            "1/4 cup low-sodium soy sauce",
+            "2 tablespoons fresh lime juice",
+            "1 tablespoon sesame oil",
+            "1/4 cup honey",
+            "1 tablespoon minced garlic",
+            "1/4 teaspoon crushed red pepper flakes (optional)",
+            "2 teaspoons sesame seeds, for garnishing"
+          ]
+        }
+      ],
+      "instructions": [
+        {
+          "group": "Make the salad",
+          "steps": [
+            "Bring a large pot of water to a boil. Add the ramen noodles and cook according to package directions. Reserve 1/4 cup of the boiling water and set it aside, then drain the noodles and add them to a large bowl.",
+            "Add the edamame, cabbage, carrots, almonds and scallions to the bowl and toss to combine."
+          ]
+        },
+        {
+          "group": "Make the dressing",
+          "steps": [
+            "In a medium bowl, whisk together the peanut butter, soy sauce, lime juice, sesame oil, honey, garlic, crushed red pepper flakes (optional) and hot water until smooth.",
+            "Add the dressing to the bowl with the noodles and veggies and toss to combine.",
+            "Garnish with sesame seeds and serve or let cool completely before covering with plastic wrap and storing in the fridge."
+          ]
+        }
+      ],
+      "notes": "",
+      "protein": "vegetarian",
+      "meal": "side",
+      "method": null,
+      "sourceUrl": "https://www.justataste.com/chilled-ramen-noodle-salad-peanut-dressing-recipe/",
+      "searchText": "chilled ramen noodle salad with peanut dressing 2 (3 oz) packages ramen noodles, seasoning packets discarded 1 cup shelled edamame 2 cups finely shredded purple cabbage 1 cup shredded carrots 1/2 cup slivered almonds 1/4 cup sliced scallions 1/3 cup creamy peanut butter 1/4 cup low-sodium soy sauce 2 tablespoons fresh lime juice 1 tablespoon sesame oil 1/4 cup honey 1 tablespoon minced garlic 1/4 teaspoon crushed red pepper flakes (optional) 2 teaspoons sesame seeds, for garnishing bring a large pot of water to a boil. add the ramen noodles and cook according to package directions. reserve 1/4 cup of the boiling water and set it aside, then drain the noodles and add them to a large bowl. add the edamame, cabbage, carrots, almonds and scallions to the bowl and toss to combine. in a medium bowl, whisk together the peanut butter, soy sauce, lime juice, sesame oil, honey, garlic, crushed red pepper flakes (optional) and hot water until smooth. add the dressing to the bowl with the noodles and veggies and toss to combine. garnish with sesame seeds and serve or let cool completely before covering with plastic wrap and storing in the fridge."
     },
     {
       "id": "chocolate-lasagna",
@@ -2442,6 +2442,36 @@
       "searchText": "potato leek soup (creamy without cream) 2 tablespoons extra-virgin olive oil 3 large leeks, dark green tops and roots removed, halved lengthwise and sliced crosswise into 1/4-inch pieces 2 garlic cloves, minced 4 cups vegetable broth (or more for thinner texture) 2 pounds yukon gold potatoes, peeled and diced into 1/2-inch pieces 1 teaspoon kosher salt 1 bay leaf 2 sprigs fresh thyme freshly chopped chives for garnish black pepper for garnish place chopped leeks in a colander and rinse thoroughly under cold water to remove dirt. heat olive oil in a dutch oven over medium heat. add leeks and cook 8 to 10 minutes until softened, avoiding browning. add garlic and cook 1 minute more. add diced potatoes, salt, bay leaf, thyme sprigs, and vegetable broth. increase heat to high and bring to a boil, then reduce to low. cover and simmer 15 to 20 minutes until potatoes are fork-tender. remove and discard bay leaf and thyme sprigs. use an immersion blender to blend to desired creaminess, or blend in batches using a high-powered blender. serve topped with chopped chives and freshly ground black pepper."
     },
     {
+      "id": "pound-cake",
+      "title": "Pound Cake",
+      "ingredients": [
+        "1½ cups all-purpose flour (180g)",
+        "½ teaspoon salt",
+        "½ teaspoon baking powder",
+        "½ cup unsalted butter, room temperature (113g)",
+        "1½ cups granulated sugar (300g)",
+        "4 large eggs, room temperature",
+        "½ cup sour cream, room temperature (120g)",
+        "2 teaspoons vanilla extract"
+      ],
+      "instructions": [
+        "Preheat the oven to 350°F. Butter and flour a 9×5-inch loaf pan. (If you want a taller loaf, you can use an 8½x4½-inch pan.)",
+        "In a medium bowl, whisk together the flour, salt, and baking powder, then set aside.",
+        "In a stand mixer fitted with a whisk attachment, beat the butter on medium speed for about 2 minutes until creamy. Add the sugar and mix for an additional 2 minutes, until combined. Scrape the bowl down and beat a few more seconds.",
+        "While mixing at medium-low speed, add the eggs one at a time. Scrape the bowl down and beat until fully incorporated.",
+        "Add the sour cream and vanilla. Mix until incorporated. Scrape the bowl down.",
+        "Add the flour mixture and mix on low until combined. Scrape the bowl down and use your spatula to mix in any pockets of flour or butter that remain.",
+        "Transfer the batter to the prepared loaf pan, then smooth it into an even layer. Bake for about 65 minutes or until the center is set and a skewer comes out clean.",
+        "Allow to cool in the pan for about 10 minutes before transferring to a cooling rack."
+      ],
+      "notes": "",
+      "protein": "vegetarian",
+      "meal": "dessert",
+      "method": null,
+      "sourceUrl": "https://preppykitchen.com/pound-cake/",
+      "searchText": "pound cake 1½ cups all-purpose flour (180g) ½ teaspoon salt ½ teaspoon baking powder ½ cup unsalted butter, room temperature (113g) 1½ cups granulated sugar (300g) 4 large eggs, room temperature ½ cup sour cream, room temperature (120g) 2 teaspoons vanilla extract preheat the oven to 350°f. butter and flour a 9×5-inch loaf pan. (if you want a taller loaf, you can use an 8½x4½-inch pan.) in a medium bowl, whisk together the flour, salt, and baking powder, then set aside. in a stand mixer fitted with a whisk attachment, beat the butter on medium speed for about 2 minutes until creamy. add the sugar and mix for an additional 2 minutes, until combined. scrape the bowl down and beat a few more seconds. while mixing at medium-low speed, add the eggs one at a time. scrape the bowl down and beat until fully incorporated. add the sour cream and vanilla. mix until incorporated. scrape the bowl down. add the flour mixture and mix on low until combined. scrape the bowl down and use your spatula to mix in any pockets of flour or butter that remain. transfer the batter to the prepared loaf pan, then smooth it into an even layer. bake for about 65 minutes or until the center is set and a skewer comes out clean. allow to cool in the pan for about 10 minutes before transferring to a cooling rack."
+    },
+    {
       "id": "pumpkin-cookies",
       "title": "Pumpkin Cookies with Cream Cheese Frosting",
       "ingredients": [
@@ -3696,6 +3726,31 @@
       "searchText": "torre de fondue de queso (cheese fondue tower) 1 cup (150 g) unbleached all-purpose flour 1 teaspoon sugar 1/2 teaspoon instant yeast 1/2 teaspoon salt 1/3 cup (75 ml) warm water 2 tablespoons (30 ml) olive oil 3 small wheels of brie or camembert cheese, about 12 oz (300 g) each, all the same diameter 2 tablespoons (30 ml) olive oil, divided 1 lb (450 g) small baby potatoes salt and pepper to taste cold cuts and sour gherkins for serving (optional) in a large bowl, combine flour, sugar, yeast, and salt. add warm water and olive oil, mixing until the dough comes together. knead for 5 minutes on a floured surface until smooth. shape dough into a ball and place in an oiled bowl. cover with a damp cloth and let rise in a warm spot for 2 hours or until doubled in volume. preheat oven to 350 degrees f (180 degrees c) with rack in the middle position. using a sharp knife, remove the rind from the top of one cheese wheel. remove the rind from the top and bottom of the other two cheese wheels and stack them on top of the first to form a tower. on a lightly floured surface, roll the dough out to form a 10-inch circle. center the cheese tower on the dough, fold the dough up and over to cover completely, and seal. place seam-side down in a 13x9-inch baking dish. let rest 15 minutes. brush with 1 tablespoon olive oil. toss baby potatoes with remaining 1 tablespoon olive oil, salt, and pepper. arrange around the cheese tower in the baking dish. bake for 45 minutes or until the dough is nicely browned. using a bread knife, remove the top of the dough to reveal the melted cheese inside. if cheese is not fully melted, return to oven for 5 more minutes. serve immediately from the baking dish, dipping potatoes, bread, cold cuts, or gherkins into the melted cheese."
     },
     {
+      "id": "turkey-burgers",
+      "title": "Turkey Burgers",
+      "ingredients": [
+        "1 lb ground turkey meat (thigh meat preferred)",
+        "1 medium red onion, finely chopped",
+        "1/2 cup fresh parsley, minced (or other fresh herbs)",
+        "1 tbsp garlic powder",
+        "1 tsp salt",
+        "1 tsp pepper",
+        "Cheese slices (optional)"
+      ],
+      "instructions": [
+        "Combine all ingredients and mix together to form 4-6 patties. Make patties flat and wide because they will shrink to the size of the bun.",
+        "Grill on medium heat for 7 minutes per side.",
+        "Two minutes before the burgers finish cooking, place a cheese slice on each patty if desired.",
+        "Serve hot on potato roll buns with lettuce, tomato, pickles, ketchup, and mayonnaise."
+      ],
+      "notes": "",
+      "protein": "turkey",
+      "meal": "main",
+      "method": null,
+      "sourceUrl": "https://userealbutter.com/2008/05/03/turkey-burgers-recipe/",
+      "searchText": "turkey burgers 1 lb ground turkey meat (thigh meat preferred) 1 medium red onion, finely chopped 1/2 cup fresh parsley, minced (or other fresh herbs) 1 tbsp garlic powder 1 tsp salt 1 tsp pepper cheese slices (optional) combine all ingredients and mix together to form 4-6 patties. make patties flat and wide because they will shrink to the size of the bun. grill on medium heat for 7 minutes per side. two minutes before the burgers finish cooking, place a cheese slice on each patty if desired. serve hot on potato roll buns with lettuce, tomato, pickles, ketchup, and mayonnaise."
+    },
+    {
       "id": "turkey-kale-pasta-bake",
       "title": "Turkey and Kale Pasta Bake",
       "ingredients": [
@@ -3733,31 +3788,6 @@
       "method": "oven",
       "sourceUrl": "http://www.delish.com/cooking/g2144/ground-turkey-recipes/?slide=52",
       "searchText": "turkey and kale pasta bake 3.5 cups pasta (casarecce or similar shape) 3 cups kale, chopped small 1 lb ground turkey 28 oz marinara sauce 2 cups shredded mozzarella 1 cup pasta water (reserved) 1/3 cup fresh italian parsley 1 tablespoon balsamic vinegar 1 tablespoon honey 1 white onion, diced 3 cloves garlic, minced 2 tablespoons olive oil 1 teaspoon salt 1 teaspoon black pepper 1 teaspoon dried basil 1 teaspoon dried oregano preheat oven to 350 degrees f and prepare a 9x13 baking dish with spray oil or olive oil. cook pasta according to package instructions, stopping just before al dente. reserve 1 cup pasta water. heat a large skillet on medium heat and add olive oil until warm. add onion and garlic, stirring until fragrant. add ground turkey and cook until almost all pink is gone. add marinara, pasta, kale, balsamic vinegar, honey, salt, and pepper. mix well. add pasta water and mix again. in baking dish, add half the mixture and spread 1 cup shredded mozzarella evenly across it. add remaining mixture and top with remaining mozzarella. cover with foil and bake for 18 minutes or until mozzarella is melted."
-    },
-    {
-      "id": "turkey-burgers",
-      "title": "Turkey Burgers",
-      "ingredients": [
-        "1 lb ground turkey meat (thigh meat preferred)",
-        "1 medium red onion, finely chopped",
-        "1/2 cup fresh parsley, minced (or other fresh herbs)",
-        "1 tbsp garlic powder",
-        "1 tsp salt",
-        "1 tsp pepper",
-        "Cheese slices (optional)"
-      ],
-      "instructions": [
-        "Combine all ingredients and mix together to form 4-6 patties. Make patties flat and wide because they will shrink to the size of the bun.",
-        "Grill on medium heat for 7 minutes per side.",
-        "Two minutes before the burgers finish cooking, place a cheese slice on each patty if desired.",
-        "Serve hot on potato roll buns with lettuce, tomato, pickles, ketchup, and mayonnaise."
-      ],
-      "notes": "",
-      "protein": "turkey",
-      "meal": "main",
-      "method": "grill",
-      "sourceUrl": "https://userealbutter.com/2008/05/03/turkey-burgers-recipe/",
-      "searchText": "turkey burgers 1 lb ground turkey meat (thigh meat preferred) 1 medium red onion, finely chopped 1/2 cup fresh parsley, minced (or other fresh herbs) 1 tbsp garlic powder 1 tsp salt 1 tsp pepper cheese slices (optional) combine all ingredients and mix together to form 4-6 patties. make patties flat and wide because they will shrink to the size of the bun. grill on medium heat for 7 minutes per side. two minutes before the burgers finish cooking, place a cheese slice on each patty if desired. serve hot on potato roll buns with lettuce, tomato, pickles, ketchup, and mayonnaise."
     },
     {
       "id": "watermelon-cucumber-cooler",
