@@ -10,7 +10,13 @@
 
 <header class="header">
   <div class="header-inner">
-    <h1>Recipe <span>Book</span></h1>
+    <div class="header-title-row">
+      <h1>Recipe <span>Book</span></h1>
+      <div class="header-actions">
+        <button class="icon-btn" id="save-pins-btn" title="Save pins to GitHub" style="display:none;">Save Pins</button>
+        <button class="icon-btn icon-btn-subtle" id="settings-btn" title="Settings">&#9881;</button>
+      </div>
+    </div>
     <div class="search-row">
       <input type="text" class="search-input" placeholder="Search recipes..." id="search">
       <span class="result-count" id="count"></span>
@@ -19,6 +25,10 @@
 </header>
 
 <div class="filters" id="filters"></div>
+<div class="pinned-section" id="pinned-section" style="display:none;">
+  <div class="pinned-header">This Week</div>
+  <div class="pinned-grid" id="pinned-grid"></div>
+</div>
 <div class="grid" id="grid"></div>
 
 <dialog id="modal">
@@ -30,20 +40,66 @@
   <div class="modal-body" id="modal-body"></div>
 </dialog>
 
+<dialog id="settings-modal">
+  <div class="modal-header">
+    <h2>Settings</h2>
+    <button class="modal-close" id="settings-close">&times;</button>
+  </div>
+  <div class="modal-body">
+    <p style="margin-bottom:0.75rem;font-size:0.9rem;color:var(--text-muted);">
+      Enter a GitHub Personal Access Token with <strong>repo</strong> scope to save pins directly from this page.
+    </p>
+    <input type="password" class="search-input" id="pat-input" placeholder="ghp_..." style="width:100%;margin-bottom:0.75rem;">
+    <div style="display:flex;gap:0.5rem;">
+      <button class="icon-btn" id="pat-save">Save Token</button>
+      <button class="icon-btn icon-btn-subtle" id="pat-clear">Clear Token</button>
+    </div>
+    <p id="pat-status" style="margin-top:0.5rem;font-size:0.85rem;color:var(--text-muted);"></p>
+  </div>
+</dialog>
+
 <script>
+const REPO_OWNER = "canarybrad";
+const REPO_NAME = "recipe-book";
+const PINNED_PATH = "pinned.json";
+
 let DATA = { recipes: [], filters: {} };
+let pinnedIds = [];
+let pinnedDirty = false;
 let activeFilters = { protein: null, meal: null, method: null };
 let searchTerm = "";
 let debounceTimer;
 
 // --- Init ---
-fetch("recipes.json")
-  .then(r => r.json())
-  .then(data => {
-    DATA = data;
-    renderFilters();
-    renderGrid();
-  });
+Promise.all([
+  fetch("recipes.json").then(r => r.json()),
+  fetch("pinned.json").then(r => r.json()).catch(() => [])
+]).then(([data, pinned]) => {
+  DATA = data;
+  pinnedIds = pinned;
+  // Merge with localStorage overrides
+  const local = localStorage.getItem("pinnedIds");
+  if (local) {
+    try { pinnedIds = JSON.parse(local); } catch(e) {}
+  }
+  renderFilters();
+  renderAll();
+});
+
+function isPinned(id) { return pinnedIds.includes(id); }
+
+function togglePin(id, e) {
+  if (e) { e.stopPropagation(); e.preventDefault(); }
+  if (isPinned(id)) {
+    pinnedIds = pinnedIds.filter(p => p !== id);
+  } else {
+    pinnedIds.push(id);
+  }
+  localStorage.setItem("pinnedIds", JSON.stringify(pinnedIds));
+  pinnedDirty = true;
+  document.getElementById("save-pins-btn").style.display = getToken() ? "" : "none";
+  renderAll();
+}
 
 // --- Filters ---
 function renderFilters() {
@@ -76,7 +132,7 @@ function renderFilters() {
       activeFilters[group] = value;
       chip.classList.add("active");
     }
-    renderGrid();
+    renderAll();
   });
 }
 
@@ -85,7 +141,7 @@ document.getElementById("search").addEventListener("input", e => {
   clearTimeout(debounceTimer);
   debounceTimer = setTimeout(() => {
     searchTerm = e.target.value.trim().toLowerCase();
-    renderGrid();
+    renderAll();
   }, 150);
 });
 
@@ -113,25 +169,44 @@ function getPreviewItems(recipe) {
   return items.slice(0, 4);
 }
 
-function renderGrid() {
+function renderCard(r) {
+  const tags = [r.protein, r.meal, r.method].filter(Boolean);
+  const preview = getPreviewItems(r);
+  const pinned = isPinned(r.id);
+  return `<div class="card${pinned ? " card-pinned" : ""}" data-id="${r.id}">
+    <div class="card-top-row">
+      <div class="card-title">${esc(r.title)}</div>
+      <button class="pin-btn${pinned ? " pinned" : ""}" data-pin="${r.id}" title="${pinned ? "Unpin" : "Pin for this week"}">${pinned ? "&#9733;" : "&#9734;"}</button>
+    </div>
+    <div class="card-tags">${tags.map(t => `<span class="tag">${t}</span>`).join("")}</div>
+    <ul class="card-preview">${preview.map(i => `<li>${esc(shorten(i))}</li>`).join("")}</ul>
+  </div>`;
+}
+
+function renderAll() {
   const filtered = getFiltered();
+  const pinnedRecipes = filtered.filter(r => isPinned(r.id));
+  const unpinnedRecipes = filtered.filter(r => !isPinned(r.id));
+
   document.getElementById("count").textContent = `${filtered.length} recipe${filtered.length !== 1 ? "s" : ""}`;
 
-  const grid = document.getElementById("grid");
-  if (filtered.length === 0) {
-    grid.innerHTML = `<div class="empty-state">No recipes found. Try adjusting your search or filters.</div>`;
-    return;
+  // Pinned section
+  const pinnedSection = document.getElementById("pinned-section");
+  const pinnedGrid = document.getElementById("pinned-grid");
+  if (pinnedRecipes.length > 0) {
+    pinnedSection.style.display = "";
+    pinnedGrid.innerHTML = pinnedRecipes.map(renderCard).join("");
+  } else {
+    pinnedSection.style.display = "none";
   }
 
-  grid.innerHTML = filtered.map(r => {
-    const tags = [r.protein, r.meal, r.method].filter(Boolean);
-    const preview = getPreviewItems(r);
-    return `<div class="card" data-id="${r.id}">
-      <div class="card-title">${esc(r.title)}</div>
-      <div class="card-tags">${tags.map(t => `<span class="tag">${t}</span>`).join("")}</div>
-      <ul class="card-preview">${preview.map(i => `<li>${esc(shorten(i))}</li>`).join("")}</ul>
-    </div>`;
-  }).join("");
+  // Main grid
+  const grid = document.getElementById("grid");
+  if (unpinnedRecipes.length === 0 && pinnedRecipes.length === 0) {
+    grid.innerHTML = `<div class="empty-state">No recipes found. Try adjusting your search or filters.</div>`;
+  } else {
+    grid.innerHTML = unpinnedRecipes.map(renderCard).join("");
+  }
 }
 
 function shorten(s) {
@@ -144,10 +219,19 @@ function esc(s) {
   return d.innerHTML;
 }
 
+// --- Pin click handler (delegated) ---
+document.addEventListener("click", e => {
+  const pinBtn = e.target.closest(".pin-btn");
+  if (pinBtn) {
+    togglePin(pinBtn.dataset.pin, e);
+    return;
+  }
+});
+
 // --- Modal ---
-document.getElementById("grid").addEventListener("click", e => {
+document.addEventListener("click", e => {
   const card = e.target.closest(".card");
-  if (!card) return;
+  if (!card || e.target.closest(".pin-btn")) return;
   const recipe = DATA.recipes.find(r => r.id === card.dataset.id);
   if (!recipe) return;
   openModal(recipe);
@@ -185,7 +269,6 @@ function renderIngredients(ingredients) {
       html += `<h4>${esc(item.group)}</h4><ul>${item.items.map(i => `<li>${esc(i)}</li>`).join("")}</ul>`;
     }
   }
-  // Merge adjacent <ul> tags for flat lists
   html = html.replace(/<\/ul><ul>/g, "");
   return html;
 }
@@ -207,6 +290,103 @@ document.getElementById("modal-close").addEventListener("click", () => {
 
 document.getElementById("modal").addEventListener("click", e => {
   if (e.target === e.currentTarget) e.currentTarget.close();
+});
+
+// --- Settings modal ---
+document.getElementById("settings-btn").addEventListener("click", () => {
+  const pat = getToken();
+  document.getElementById("pat-input").value = pat ? "********" : "";
+  document.getElementById("pat-status").textContent = pat ? "Token is saved." : "";
+  document.getElementById("settings-modal").showModal();
+});
+
+document.getElementById("settings-close").addEventListener("click", () => {
+  document.getElementById("settings-modal").close();
+});
+
+document.getElementById("settings-modal").addEventListener("click", e => {
+  if (e.target === e.currentTarget) e.currentTarget.close();
+});
+
+document.getElementById("pat-save").addEventListener("click", () => {
+  const val = document.getElementById("pat-input").value.trim();
+  if (val && !val.startsWith("*")) {
+    localStorage.setItem("gh_pat", val);
+    document.getElementById("pat-status").textContent = "Token saved.";
+    document.getElementById("save-pins-btn").style.display = pinnedDirty ? "" : "none";
+  }
+});
+
+document.getElementById("pat-clear").addEventListener("click", () => {
+  localStorage.removeItem("gh_pat");
+  document.getElementById("pat-input").value = "";
+  document.getElementById("pat-status").textContent = "Token cleared.";
+  document.getElementById("save-pins-btn").style.display = "none";
+});
+
+function getToken() {
+  return localStorage.getItem("gh_pat") || "";
+}
+
+// --- Save pins to GitHub ---
+document.getElementById("save-pins-btn").addEventListener("click", async () => {
+  const btn = document.getElementById("save-pins-btn");
+  const token = getToken();
+  if (!token) {
+    document.getElementById("settings-modal").showModal();
+    return;
+  }
+
+  btn.textContent = "Saving...";
+  btn.disabled = true;
+
+  try {
+    // Get current file SHA
+    const getResp = await fetch(`https://api.github.com/repos/${REPO_OWNER}/${REPO_NAME}/contents/${PINNED_PATH}`, {
+      headers: { "Authorization": `token ${token}` }
+    });
+    let sha = null;
+    if (getResp.ok) {
+      const file = await getResp.json();
+      sha = file.sha;
+    }
+
+    // Commit updated pinned.json
+    const body = {
+      message: "Update pinned recipes",
+      content: btoa(JSON.stringify(pinnedIds, null, 2) + "\n"),
+    };
+    if (sha) body.sha = sha;
+
+    const putResp = await fetch(`https://api.github.com/repos/${REPO_OWNER}/${REPO_NAME}/contents/${PINNED_PATH}`, {
+      method: "PUT",
+      headers: {
+        "Authorization": `token ${token}`,
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(body),
+    });
+
+    if (putResp.ok) {
+      pinnedDirty = false;
+      btn.textContent = "Saved!";
+      setTimeout(() => {
+        btn.textContent = "Save Pins";
+        btn.style.display = "none";
+      }, 2000);
+    } else {
+      const err = await putResp.json();
+      btn.textContent = "Error";
+      console.error("GitHub API error:", err);
+      setTimeout(() => { btn.textContent = "Save Pins"; }, 3000);
+    }
+  } catch (e) {
+    btn.textContent = "Error";
+    console.error("Save failed:", e);
+    setTimeout(() => { btn.textContent = "Save Pins"; }, 3000);
+  } finally {
+    btn.disabled = false;
+  }
 });
 </script>
 
