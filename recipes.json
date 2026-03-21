@@ -36,6 +36,30 @@
       "searchText": "3 ingredient crockpot chicken tacos 6 boneless skinless chicken breasts (frozen or thawed) 1 jar (16 oz) salsa 1 packet (1.25 oz) taco seasoning 12 taco shells or flour tortillas 1 cup guacamole 2 cups shredded lettuce 1 1/2 cups shredded cheddar cheese 2 diced tomatoes 1 can (6 oz) sliced olives 1 cup sour cream spray slow cooker with non-stick cooking spray. place chicken breasts at the bottom of the slow cooker. pour salsa over the chicken and sprinkle taco seasoning on top. cook on high for 4 to 6 hours or on low for 6 to 8 hours. when chicken is done, shred with two forks directly in the slow cooker and stir to coat in sauce. serve shredded chicken in taco shells or flour tortillas with desired toppings."
     },
     {
+      "id": "CLAUDE",
+      "title": "Recipe Book",
+      "ingredients": [
+        "1 cup ingredient one",
+        "2 tablespoons ingredient two",
+        {
+          "group": "Optional Subgroup",
+          "items": [
+            "1/2 cup grouped ingredient"
+          ]
+        }
+      ],
+      "instructions": [
+        "First step.",
+        "Second step."
+      ],
+      "notes": "## What This Is\nA searchable collection of ~115 recipes rendered as cards with filters (protein, meal type, cooking method) and a pinning system for weekly meal planning.\n\n**Live site:** Deployed via GitHub Pages from `main` branch (see `.github/workflows/static.yml`).\n\n## Project Structure\n- `*.md` — Individual recipe files (one per recipe, markdown format)\n- `build.py` — Parses all `.md` files into `recipes.json` for the site\n- `recipes.json` — Generated file, do not edit by hand\n- `index.html` — Single-page app (vanilla JS, no framework)\n- `style.css` — Styles\n- `pinned.json` — Pinned/starred recipes, synced to repo via GitHub API from the browser\n- `_recipe_urls.json` — Maps recipe filenames to their source URLs\n- `pinned.json` — Weekly pinned recipes (auto-synced from browser via GitHub API)\n\n## Adding A Recipe\n1. Create `recipe-name.md` in this directory following the format below\n2. Add an entry to `_recipe_urls.json` with the source URL\n3. Run `python3 build.py` to regenerate `recipes.json`\n4. Commit all three changes and push\n\n### Recipe Markdown Format\n\n```markdown\n# Recipe Title\n\n## Notes (Optional)\nAny extra section becomes notes.\n```\n\n- Title: `# heading` (required)\n- `## Ingredients` and `## Instructions` are required sections\n- Ingredients use `- ` bullet lists; subgroups use `### ` headings\n- Instructions use numbered lists (`1.`, `2.`, etc.); subgroups use `### ` headings\n- Any other `##` section is captured as notes\n\n## Categorization\n`build.py` auto-categorizes recipes by scanning the title and ingredients for keywords:\n- **Protein:** chicken, beef, pork, shrimp, salmon, fish, turkey, lamb, or vegetarian (default)\n- **Meal type:** dessert, soup, salad, pasta, breakfast, appetizer, side, snack, drink, or main (default)\n- **Method:** slow-cooker, grill, air-fryer, no-cook, oven, stovetop (or null)\n\n## Pin Syncing\nPins auto-save to `pinned.json` in the repo via the GitHub API when toggled in the browser. Requires a GitHub PAT with `repo` scope saved in the settings modal. Pins load from `pinned.json` on page load so they sync across browsers.",
+      "protein": "vegetarian",
+      "meal": "main",
+      "method": null,
+      "sourceUrl": "",
+      "searchText": "recipe book 1 cup ingredient one 2 tablespoons ingredient two 1/2 cup grouped ingredient first step. second step."
+    },
+    {
       "id": "air-fryer-flautas",
       "title": "Air Fryer Flautas",
       "ingredients": [
@@ -2643,6 +2667,52 @@
       "method": null,
       "sourceUrl": "",
       "searchText": "mashed rutabaga puree with bacon 1 large (1.5 to 2 pounds) rutabaga, peeled and cut into 1/2-inch pieces 1 teaspoon kosher salt, divided 2 slices thick cut bacon (or 3 slices regular cut bacon), minced 1/2 teaspoon freshly ground black pepper 1 tablespoon minced fresh parsley place cut rutabaga into a medium saucepan. add 1/2 teaspoon of the salt and enough water to just cover. bring to a boil over high heat. reduce heat to medium-low and simmer until soft, about 20 minutes. drain. while the rutabaga cooks, cook the minced bacon over medium heat until crisp, about 8 to 10 minutes. do not discard the grease. using a food processor or potato masher, mash the drained rutabaga, remaining 1/2 teaspoon of salt, 1/2 teaspoon freshly ground black pepper, and bacon grease together until smooth. stir in the cooked bacon and 1 tablespoon minced fresh parsley. serve hot."
+    },
+    {
+      "id": "salisbury-steak-meatballs",
+      "title": "Salisbury Steak Meatballs",
+      "ingredients": [
+        {
+          "group": "Meatballs",
+          "items": [
+            "1 pound ground beef",
+            "1/3 cup Italian style bread crumbs",
+            "2 tablespoons ketchup",
+            "2 tablespoons mustard",
+            "1 tablespoon Worcestershire sauce",
+            "2 large egg yolks",
+            "Kosher salt and freshly ground black pepper, to taste"
+          ]
+        },
+        {
+          "group": "Gravy and Noodles",
+          "items": [
+            "8 ounces egg noodles",
+            "4 tablespoons unsalted butter",
+            "1 onion, thinly sliced",
+            "2 cups beef broth, divided (or more, to taste)",
+            "1 tablespoon cornstarch",
+            "1 tablespoon Worcestershire sauce",
+            "1 tablespoon ketchup",
+            "2 tablespoons chopped fresh parsley leaves"
+          ]
+        }
+      ],
+      "instructions": [
+        "Cook egg noodles in boiling salted water according to package directions; drain well.",
+        "In a large bowl, combine ground beef, bread crumbs, ketchup, mustard, Worcestershire sauce, and egg yolks. Season with salt and pepper and mix until combined. Form into approximately 20 meatballs, about 1 1/4 to 1 1/2 inches each.",
+        "Melt butter in a large skillet over medium heat. Brown meatballs in batches on all sides, about 4-5 minutes. Transfer to a paper towel-lined plate.",
+        "Whisk together 1/2 cup beef broth and cornstarch in a small bowl; set aside.",
+        "Add sliced onions to the skillet and cook until golden brown and translucent, about 2-3 minutes. Whisk in the remaining 1 1/2 cups beef broth, Worcestershire sauce, and ketchup; cook 1-2 minutes.",
+        "Bring to a boil, then reduce heat and gradually whisk in the cornstarch mixture. Return meatballs to the skillet and cook until meatballs are cooked through and sauce has thickened, about 3-4 minutes. Add more broth as needed for desired consistency.",
+        "Serve immediately over egg noodles, garnished with parsley."
+      ],
+      "notes": "",
+      "protein": "beef",
+      "meal": "appetizer",
+      "method": null,
+      "sourceUrl": "https://damndelicious.net/2014/07/11/salisbury-steak-meatballs/",
+      "searchText": "salisbury steak meatballs 1 pound ground beef 1/3 cup italian style bread crumbs 2 tablespoons ketchup 2 tablespoons mustard 1 tablespoon worcestershire sauce 2 large egg yolks kosher salt and freshly ground black pepper, to taste 8 ounces egg noodles 4 tablespoons unsalted butter 1 onion, thinly sliced 2 cups beef broth, divided (or more, to taste) 1 tablespoon cornstarch 1 tablespoon worcestershire sauce 1 tablespoon ketchup 2 tablespoons chopped fresh parsley leaves cook egg noodles in boiling salted water according to package directions; drain well. in a large bowl, combine ground beef, bread crumbs, ketchup, mustard, worcestershire sauce, and egg yolks. season with salt and pepper and mix until combined. form into approximately 20 meatballs, about 1 1/4 to 1 1/2 inches each. melt butter in a large skillet over medium heat. brown meatballs in batches on all sides, about 4-5 minutes. transfer to a paper towel-lined plate. whisk together 1/2 cup beef broth and cornstarch in a small bowl; set aside. add sliced onions to the skillet and cook until golden brown and translucent, about 2-3 minutes. whisk in the remaining 1 1/2 cups beef broth, worcestershire sauce, and ketchup; cook 1-2 minutes. bring to a boil, then reduce heat and gradually whisk in the cornstarch mixture. return meatballs to the skillet and cook until meatballs are cooked through and sauce has thickened, about 3-4 minutes. add more broth as needed for desired consistency. serve immediately over egg noodles, garnished with parsley."
     },
     {
       "id": "salmon-lemon-dill",
