@@ -136,6 +136,21 @@ PROTEIN_KEYWORDS = {
     "lamb": "lamb",
 }
 
+# Title-only meal keywords: matched against the recipe title only, never the ingredient list.
+# "carrots" in an ingredient list doesn't make a stew into a side dish.
+TITLE_ONLY_MEAL_KEYWORDS = {
+    "rice": "side",
+    "carrots": "side",
+    "broccoli": "side",
+    "cauliflower": "side",
+    "bean salad": "side",
+}
+
+# Soup-family titles always win — a "Chicken Noodle Soup" is a soup even though
+# it also contains the pasta keyword "noodle".
+SOUP_TITLE_KEYWORDS = ("soup", "stew", "chili", "chowder", "bisque")
+
+# Everything else: title first, then full text fallback.
 MEAL_KEYWORDS = {
     "breakfast": "breakfast",
     "brunch": "breakfast",
@@ -145,10 +160,6 @@ MEAL_KEYWORDS = {
     "french toast": "breakfast",
     "pancake": "breakfast",
     "smoothie": "drink",
-    "soup": "soup",
-    "chili": "soup",
-    "chowder": "soup",
-    "stew": "soup",
     "salad": "salad",
     "slaw": "salad",
     "pasta": "pasta",
@@ -174,11 +185,6 @@ MEAL_KEYWORDS = {
     "chocolate": "dessert",
     "brownie": "dessert",
     "energy bite": "snack",
-    "rice": "side",
-    "carrots": "side",
-    "broccoli": "side",
-    "cauliflower": "side",
-    "bean salad": "side",
 }
 
 METHOD_KEYWORDS = {
@@ -198,8 +204,35 @@ METHOD_KEYWORDS = {
 }
 
 
+def _classify_meal(title_lower, full_text):
+    # 1. Soup-family titles trump everything else.
+    for kw in SOUP_TITLE_KEYWORDS:
+        if _has_word(title_lower, kw):
+            return "soup"
+    # 2. Title-only side keywords (so "carrots" in an ingredient list can't fire).
+    for kw in sorted(TITLE_ONLY_MEAL_KEYWORDS.keys(), key=len, reverse=True):
+        if _has_word(title_lower, kw):
+            return TITLE_ONLY_MEAL_KEYWORDS[kw]
+    # 3. Remaining keywords: prefer a title hit, then fall back to ingredients.
+    sorted_meal = sorted(MEAL_KEYWORDS.keys(), key=len, reverse=True)
+    for kw in sorted_meal:
+        if _has_word(title_lower, kw):
+            return MEAL_KEYWORDS[kw]
+    for kw in sorted_meal:
+        if _has_word(full_text, kw):
+            return MEAL_KEYWORDS[kw]
+    return "main"
+
+
+def _has_word(text, kw):
+    # Word-boundary match with optional trailing 's' so "meatball" matches "meatballs"
+    # and "cake" doesn't match "cheesecake".
+    return re.search(r"\b" + re.escape(kw) + r"s?\b", text) is not None
+
+
 def categorize(title, ingredients_text):
     """Auto-categorize a recipe by protein, meal type, and method."""
+    title_lower = title.lower()
     text = (title + " " + ingredients_text).lower()
 
     protein = "vegetarian"
@@ -208,13 +241,7 @@ def categorize(title, ingredients_text):
             protein = cat
             break
 
-    meal = "main"
-    # Check longer phrases first
-    sorted_meal = sorted(MEAL_KEYWORDS.keys(), key=len, reverse=True)
-    for kw in sorted_meal:
-        if kw in text:
-            meal = MEAL_KEYWORDS[kw]
-            break
+    meal = _classify_meal(title_lower, text)
 
     method = None
     for kw, cat in METHOD_KEYWORDS.items():
