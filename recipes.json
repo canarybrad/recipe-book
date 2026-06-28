@@ -36,30 +36,6 @@
       "searchText": "3 ingredient crockpot chicken tacos 6 boneless skinless chicken breasts (frozen or thawed) 1 jar (16 oz) salsa 1 packet (1.25 oz) taco seasoning 12 taco shells or flour tortillas 1 cup guacamole 2 cups shredded lettuce 1 1/2 cups shredded cheddar cheese 2 diced tomatoes 1 can (6 oz) sliced olives 1 cup sour cream spray slow cooker with non-stick cooking spray. place chicken breasts at the bottom of the slow cooker. pour salsa over the chicken and sprinkle taco seasoning on top. cook on high for 4 to 6 hours or on low for 6 to 8 hours. when chicken is done, shred with two forks directly in the slow cooker and stir to coat in sauce. serve shredded chicken in taco shells or flour tortillas with desired toppings."
     },
     {
-      "id": "CLAUDE",
-      "title": "Recipe Book",
-      "ingredients": [
-        "1 cup ingredient one",
-        "2 tablespoons ingredient two",
-        {
-          "group": "Optional Subgroup",
-          "items": [
-            "1/2 cup grouped ingredient"
-          ]
-        }
-      ],
-      "instructions": [
-        "First step.",
-        "Second step."
-      ],
-      "notes": "## What This Is\nA searchable collection of ~115 recipes rendered as cards with filters (protein, meal type, cooking method) and a pinning system for weekly meal planning.\n\n**Live site:** Deployed via GitHub Pages from `main` branch (see `.github/workflows/static.yml`).\n\n## Project Structure\n- `*.md` — Individual recipe files (one per recipe, markdown format)\n- `build.py` — Parses all `.md` files into `recipes.json` for the site\n- `recipes.json` — Generated file, do not edit by hand\n- `index.html` — Single-page app (vanilla JS, no framework)\n- `style.css` — Styles\n- `pinned.json` — Pinned/starred recipes, synced to repo via GitHub API from the browser\n- `_recipe_urls.json` — Maps recipe filenames to their source URLs\n- `pinned.json` — Weekly pinned recipes (auto-synced from browser via GitHub API)\n\n## Adding A Recipe\n1. Create `recipe-name.md` in this directory following the format below\n2. Add an entry to `_recipe_urls.json` with the source URL\n3. Run `python3 build.py` to regenerate `recipes.json`\n4. Commit all three changes and push\n\n### Recipe Markdown Format\n\n```markdown\n# Recipe Title\n\n## Notes (Optional)\nAny extra section becomes notes.\n```\n\n- Title: `# heading` (required)\n- `## Ingredients` and `## Instructions` are required sections\n- Ingredients use `- ` bullet lists; subgroups use `### ` headings\n- Instructions use numbered lists (`1.`, `2.`, etc.); subgroups use `### ` headings\n- Any other `##` section is captured as notes\n\n## Categorization\n`build.py` auto-categorizes recipes by scanning the title and ingredients for keywords:\n- **Protein:** chicken, beef, pork, shrimp, salmon, fish, turkey, lamb, or vegetarian (default)\n- **Meal type:** dessert, soup, salad, pasta, breakfast, appetizer, side, snack, drink, or main (default)\n- **Method:** slow-cooker, grill, air-fryer, no-cook, oven, stovetop (or null)\n\n## Pin Syncing\nPins auto-save to `pinned.json` in the repo via the GitHub API when toggled in the browser. Requires a GitHub PAT with `repo` scope saved in the settings modal. Pins load from `pinned.json` on page load so they sync across browsers.",
-      "protein": "vegetarian",
-      "meal": "main",
-      "method": null,
-      "sourceUrl": "",
-      "searchText": "recipe book 1 cup ingredient one 2 tablespoons ingredient two 1/2 cup grouped ingredient first step. second step."
-    },
-    {
       "id": "air-fryer-flautas",
       "title": "Air Fryer Flautas",
       "ingredients": [
@@ -1040,6 +1016,30 @@
       "method": null,
       "sourceUrl": "https://downshiftology.com/recipes/deviled-eggs/",
       "searchText": "classic deviled eggs 6 large eggs 3 tablespoons mayonnaise 1 teaspoon dijon mustard 1 teaspoon apple cider vinegar kosher salt and ground black pepper to taste paprika for garnish bring water to a boil, reduce heat to low, then use a skimmer to place eggs in water. increase heat back to high and cook for 14 minutes. remove the eggs from the water and place them in an ice water bath to cool. once cooled, peel eggs and slice lengthwise. scoop yolks into a bowl and arrange whites on a serving plate. mash yolks with a fork, then combine with mayonnaise, mustard, vinegar, salt, and pepper until smooth. use a spoon to add a portion of the filling back into the hole of each egg white. sprinkle with paprika for garnish."
+    },
+    {
+      "id": "CLAUDE",
+      "title": "Recipe Book",
+      "ingredients": [
+        "1 cup ingredient one",
+        "2 tablespoons ingredient two",
+        {
+          "group": "Optional Subgroup",
+          "items": [
+            "1/2 cup grouped ingredient"
+          ]
+        }
+      ],
+      "instructions": [
+        "First step.",
+        "Second step."
+      ],
+      "notes": "## What This Is\nA searchable collection of ~115 recipes rendered as cards with filters (protein, meal type, cooking method) and a pinning system for weekly meal planning.\n\n**Live site:** Deployed via GitHub Pages from `main` branch (see `.github/workflows/static.yml`).\n\n## Project Structure\n- `*.md` — Individual recipe files (one per recipe, markdown format)\n- `build.py` — Parses all `.md` files into `recipes.json` for the site\n- `recipes.json` — Generated file, do not edit by hand\n- `index.html` — Single-page app (vanilla JS, no framework)\n- `style.css` — Styles\n- `pinned.json` — Pinned/starred recipes, synced to repo via GitHub API from the browser\n- `_recipe_urls.json` — Maps recipe filenames to their source URLs\n- `pinned.json` — Weekly pinned recipes (auto-synced from browser via GitHub API)\n\n## Adding A Recipe\n1. Create `recipe-name.md` in this directory following the format below\n2. Add an entry to `_recipe_urls.json` with the source URL\n3. Run `python3 build.py` to regenerate `recipes.json`\n4. Commit all three changes and push\n\n### Recipe Markdown Format\n\n```markdown\n# Recipe Title\n\n## Notes (Optional)\nAny extra section becomes notes.\n```\n\n- Title: `# heading` (required)\n- `## Ingredients` and `## Instructions` are required sections\n- Ingredients use `- ` bullet lists; subgroups use `### ` headings\n- Instructions use numbered lists (`1.`, `2.`, etc.); subgroups use `### ` headings\n- Any other `##` section is captured as notes\n\n## Categorization\n`build.py` auto-categorizes recipes by scanning the title and ingredients for keywords:\n- **Protein:** chicken, beef, pork, shrimp, salmon, fish, turkey, lamb, or vegetarian (default)\n- **Meal type:** dessert, soup, salad, pasta, breakfast, appetizer, side, snack, drink, or main (default)\n- **Method:** slow-cooker, grill, air-fryer, no-cook, oven, stovetop (or null)\n\n## Pin Syncing\nPins auto-save to `pinned.json` in the repo via the GitHub API when toggled in the browser. Requires a GitHub PAT with `repo` scope saved in the settings modal. Pins load from `pinned.json` on page load so they sync across browsers.",
+      "protein": "vegetarian",
+      "meal": "main",
+      "method": null,
+      "sourceUrl": "",
+      "searchText": "recipe book 1 cup ingredient one 2 tablespoons ingredient two 1/2 cup grouped ingredient first step. second step."
     },
     {
       "id": "clean-eating-salmon",
@@ -3233,6 +3233,34 @@
       "method": "slow-cooker",
       "sourceUrl": "http://www.themagicalslowcooker.com/2015/12/02/slow-cooker-chicken-parmesan-and-pasta/",
       "searchText": "slow cooker chicken parmesan pasta 4 boneless, skinless chicken breasts salt and pepper to taste 1 teaspoon dried oregano 1 tablespoon dried basil 1 teaspoon dried parsley 1/2 teaspoon crushed red pepper flakes 2 cloves garlic, minced 1/4 cup onion, diced 2 (28-ounce) cans crushed tomatoes 1 pound penne pasta 1 1/2 cups shredded mozzarella cheese 1/4 cup freshly grated parmesan cheese fresh parsley or basil, for garnish season chicken breasts with salt and pepper and place in the slow cooker. combine crushed tomatoes, garlic, onion, oregano, parsley, basil, and red pepper flakes in a bowl. pour sauce mixture over the chicken. cover and cook on low for 4 hours or high for 2 hours. remove chicken and shred with two forks. cook penne pasta on the stovetop according to package directions. drain. add shredded chicken back to the slow cooker. stir in the cooked pasta. top with mozzarella and parmesan cheese. cover and cook for 15-20 minutes until cheese is melted. garnish with fresh parsley or basil and serve."
+    },
+    {
+      "id": "slow-cooker-honey-garlic-chicken",
+      "title": "Slow Cooker Honey Garlic Chicken",
+      "ingredients": [
+        "1½ pounds boneless, skinless chicken thighs or chicken breasts",
+        "⅓ cup low-sodium soy sauce",
+        "⅓ cup honey",
+        "2 tablespoons tomato paste",
+        "2 teaspoons chili paste (sambal oelek, sriracha, or hot sauce)",
+        "4 cloves garlic, minced",
+        "1 tablespoon rice vinegar",
+        "2 tablespoons cornstarch",
+        "Toasted sesame seeds (for serving)",
+        "Chopped green onion (for serving)"
+      ],
+      "instructions": [
+        "Place chicken in slow cooker. Whisk together soy sauce, honey, tomato paste, chili paste, garlic, and rice vinegar. Pour over chicken.",
+        "Cover and cook on LOW for 4-5 hours or HIGH for 2-3 hours, until internal temperature reaches 165°F. Flip chicken halfway through if possible.",
+        "Remove chicken to a plate to cool slightly. Whisk cornstarch into the liquid in the slow cooker. Cover and cook on HIGH for 15 minutes, stirring occasionally, until sauce thickens.",
+        "Shred chicken and return to slow cooker. Stir to coat with sauce. Serve over rice topped with green onions and sesame seeds."
+      ],
+      "notes": "## Notes\n- To thicken sauce on the stovetop instead, transfer sauce to a saucepan and cook over medium heat for 5-10 minutes.\n- Refrigerate up to 4 days; freeze up to 3 months.",
+      "protein": "chicken",
+      "meal": "main",
+      "method": "slow-cooker",
+      "sourceUrl": "https://www.wellplated.com/slow-cooker-honey-garlic-chicken/",
+      "searchText": "slow cooker honey garlic chicken 1½ pounds boneless, skinless chicken thighs or chicken breasts ⅓ cup low-sodium soy sauce ⅓ cup honey 2 tablespoons tomato paste 2 teaspoons chili paste (sambal oelek, sriracha, or hot sauce) 4 cloves garlic, minced 1 tablespoon rice vinegar 2 tablespoons cornstarch toasted sesame seeds (for serving) chopped green onion (for serving) place chicken in slow cooker. whisk together soy sauce, honey, tomato paste, chili paste, garlic, and rice vinegar. pour over chicken. cover and cook on low for 4-5 hours or high for 2-3 hours, until internal temperature reaches 165°f. flip chicken halfway through if possible. remove chicken to a plate to cool slightly. whisk cornstarch into the liquid in the slow cooker. cover and cook on high for 15 minutes, stirring occasionally, until sauce thickens. shred chicken and return to slow cooker. stir to coat with sauce. serve over rice topped with green onions and sesame seeds."
     },
     {
       "id": "slow-cooker-honey-lime-ginger-pork",
